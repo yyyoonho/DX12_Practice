@@ -7,6 +7,9 @@ public:
 	MonoBehaviour();
 	virtual ~MonoBehaviour();
 
+private:
+	virtual void Finalupdate() sealed { }
+
 public:
 
 };
