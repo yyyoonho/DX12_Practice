@@ -6,7 +6,7 @@
 #include "Light.h"
 #include "MonoBehaviour.h"
 
-GameObject::GameObject() :Object(OBJECT_TYPE::GAMEOBJECT)
+GameObject::GameObject() : Object(OBJECT_TYPE::GAMEOBJECT)
 {
 
 }
@@ -15,7 +15,6 @@ GameObject::~GameObject()
 {
 
 }
-
 
 void GameObject::Awake()
 {
@@ -80,8 +79,6 @@ void GameObject::FinalUpdate()
 		if (component)
 			component->FinalUpdate();
 	}
-
-
 }
 
 shared_ptr<Component> GameObject::GetFixedComponent(COMPONENT_TYPE type)
