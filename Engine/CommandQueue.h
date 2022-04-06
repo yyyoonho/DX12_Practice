@@ -39,4 +39,3 @@ private:
 
 	shared_ptr<SwapChain>		_swapChain;
 };
-

@@ -1,12 +1,11 @@
 #pragma once
 #include "Component.h"
 
-enum class LIGHT_TYPE :uint8
+enum class LIGHT_TYPE : uint8
 {
 	DIRECTIONAL_LIGHT,
 	POINT_LIGHT,
 	SPOT_LIGHT,
-
 };
 
 struct LightColor
@@ -16,11 +15,11 @@ struct LightColor
 	Vec4	specular;
 };
 
-struct LightInfo //Light정보를 셰이더에 위해 정리
+struct LightInfo
 {
 	LightColor	color;
-	Vec4		position; //포인트, 스팟 라이트에 해당
-	Vec4		direction; //스팟,디렉셔널 라이트에 해당
+	Vec4		position;
+	Vec4		direction;
 	int32		lightType;
 	float		range;
 	float		angle;
@@ -34,13 +33,14 @@ struct LightParams
 	LightInfo	lights[50];
 };
 
-class Light :public Component
+class Light : public Component
 {
 public:
 	Light();
 	virtual ~Light();
 
 	virtual void FinalUpdate() override;
+	void Render();
 
 public:
 	const LightInfo& GetLightInfo() { return _lightInfo; }
@@ -51,11 +51,16 @@ public:
 	void SetAmbient(const Vec3& ambient) { _lightInfo.color.ambient = ambient; }
 	void SetSpecular(const Vec3& specular) { _lightInfo.color.specular = specular; }
 
-	void SetLightType(LIGHT_TYPE type) { _lightInfo.lightType = static_cast<int32>(type); }
+	void SetLightType(LIGHT_TYPE type);
 	void SetLightRange(float range) { _lightInfo.range = range; }
 	void SetLightAngle(float angle) { _lightInfo.angle = angle; }
 
+	void SetLightIndex(int8 index) { _lightIndex = index; }
+
 private:
 	LightInfo _lightInfo = {};
-};
 
+	int8 _lightIndex = -1;
+	shared_ptr<class Mesh> _volumeMesh;
+	shared_ptr<class Material> _lightMaterial;
+};
